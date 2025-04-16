@@ -10,6 +10,7 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  // console.log(err?.name);
   let statusCode: number = status.INTERNAL_SERVER_ERROR;
   let message = "Something went wrong!";
 
