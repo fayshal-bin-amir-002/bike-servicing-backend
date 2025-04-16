@@ -14,6 +14,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ServiceStatus {
+  pending
+  inProgress @map("in-progress")
+  done
+}
+
 model Customer {
   customerId String   @id @default(uuid())
   name       String
@@ -24,12 +30,6 @@ model Customer {
   bike Bike[]
 
   @@map("customers")
-}
-
-enum ServiceStatus {
-  pending
-  inProgress @map("in-progress")
-  done
 }
 
 model Bike {
@@ -48,9 +48,9 @@ model ServiceRecord {
   serviceId      String        @id @default(uuid())
   bikeId         String
   serviceDate    DateTime
-  completionDate DateTime
+  completionDate DateTime?
   description    String
-  status         ServiceStatus
+  status         ServiceStatus @default(pending)
 
   @@map("serviceRecords")
 }

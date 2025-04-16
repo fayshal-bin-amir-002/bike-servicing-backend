@@ -151,6 +151,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.ServiceStatus = exports.$Enums.ServiceStatus = {
   pending: 'pending',
   inProgress: 'inProgress',
