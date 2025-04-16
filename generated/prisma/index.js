@@ -162,6 +162,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -179,16 +183,17 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:12002@localhost:5432/bike-servicing-backend?schema=public"
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum ServiceStatus {\n  pending\n  inProgress @map(\"in-progress\")\n  done\n}\n\nmodel Customer {\n  customerId String   @id @default(uuid())\n  name       String\n  email      String   @unique\n  phone      String\n  createdAt  DateTime @default(now())\n\n  bike Bike[]\n\n  @@map(\"customers\")\n}\n\nmodel Bike {\n  bikeId     String @id @default(uuid())\n  brand      String\n  model      String\n  year       Int\n  customerId String\n\n  customer Customer @relation(fields: [customerId], references: [customerId])\n\n  @@map(\"bikes\")\n}\n\nmodel ServiceRecord {\n  serviceId      String        @id @default(uuid())\n  bikeId         String\n  serviceDate    DateTime\n  completionDate DateTime?\n  description    String\n  status         ServiceStatus @default(pending)\n\n  @@map(\"serviceRecords\")\n}\n",
-  "inlineSchemaHash": "d9d084595fe054dc996341d47ea9c92a798c525fd55daeec3ba7d87b818448de",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum ServiceStatus {\n  pending\n  inProgress @map(\"in-progress\")\n  done\n}\n\nmodel Customer {\n  customerId String   @id @default(uuid())\n  name       String\n  email      String   @unique\n  phone      String\n  createdAt  DateTime @default(now())\n\n  bike Bike[]\n\n  @@map(\"customers\")\n}\n\nmodel Bike {\n  bikeId     String @id @default(uuid())\n  brand      String\n  model      String\n  year       Int\n  customerId String\n\n  customer Customer @relation(fields: [customerId], references: [customerId])\n\n  @@map(\"bikes\")\n}\n\nmodel ServiceRecord {\n  serviceId      String        @id @default(uuid())\n  bikeId         String\n  serviceDate    DateTime\n  completionDate DateTime?\n  description    String\n  status         ServiceStatus @default(pending)\n\n  @@map(\"serviceRecords\")\n}\n",
+  "inlineSchemaHash": "8efdb596e433dc0942db938d50142b578a3ce3b0da32b9f70555984d22460377",
   "copyEngine": true
 }
 
@@ -229,6 +234,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
 path.join(process.cwd(), "generated/prisma/libquery_engine-darwin-arm64.dylib.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma/schema.prisma")

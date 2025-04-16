@@ -14,6 +14,18 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use("/api", routes_1.default);
+app.get("/", (req, res) => {
+    res.send({
+        status: "success",
+        code: 200,
+        message: "Bike Servicing Backend is running...",
+        author: {
+            name: "Fayshal Bin Amir",
+            email: "foyshalbinamir@gmail.com",
+            contact: "+8801755288840",
+        },
+    });
+});
 app.use(globalErrorHandler_1.globalErrorHandler);
 app.use((req, res, next) => {
     res.status(http_status_1.default.NOT_FOUND).json({
@@ -26,17 +38,5 @@ app.use((req, res, next) => {
         },
     });
     next();
-});
-app.get("/", (req, res) => {
-    res.send({
-        status: "success",
-        code: 200,
-        message: "Bike Servicing Backend is running...",
-        author: {
-            name: "Fayshal Bin Amir",
-            email: "foyshalbinamir@gmail.com",
-            contact: "+8801755288840",
-        },
-    });
 });
 exports.default = app;

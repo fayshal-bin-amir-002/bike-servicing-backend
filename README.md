@@ -21,7 +21,7 @@ An API-driven backend application for managing bike servicing records, built wit
 ### Prerequisites
 
 - Node.js (v18+ recommended)
-- PostgreSQL (local or cloud)
+- PostgreSQL (cloud)
 - Yarn or npm
 
 ### Setup Instructions
